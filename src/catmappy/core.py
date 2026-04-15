@@ -434,22 +434,21 @@ def build_key_from_columns(data: pd.DataFrame, columns: list[str], key_column: s
         raise CatMapPyError(f"Source key column(s) not found in `data`: {', '.join(missing)}.")
     out = data.copy()
     keys = []
-    bad_rows = []
-    for i, row in out.iterrows():
+    bad_indices = []
+    for i, row_values in zip(out.index, out[columns].itertuples(index=False, name=None)):
         parts: list[str] = []
-        for col in columns:
-            raw = row[col]
+        for col, raw in zip(columns, row_values):
             text = "" if pd.isna(raw) else str(raw).strip()
             if text:
                 parts.append(f"{col} == {text}")
         key = " && ".join(parts)
         if not key:
-            bad_rows.append(i)
+            bad_indices.append(i)
         keys.append(key)
-    if bad_rows:
+    if bad_indices:
         raise CatMapPyError(
-            "Cannot build Key values for row index label(s) with empty source values across selected columns: "
-            f"{', '.join(map(str, bad_rows))}."
+            "Cannot build Key values for row index/indices with empty source values across selected columns: "
+            f"{', '.join(map(str, bad_indices))}."
         )
     out[key_column] = keys
     return out.drop(columns=columns) if drop_source else out
