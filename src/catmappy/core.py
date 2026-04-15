@@ -333,7 +333,7 @@ def findMergingTemplate(cmid: str, database: str = "SocioMap", url: str | None =
     summary = getMergingTemplateSummary(cmid=cmid, database=database, url=url)
     template = getMergingTemplate(cmid=cmid, database=database, url=url)
     node_type = str(summary.get("nodeType", "")).upper()
-    variable_count = float((summary.get("stackSummaryTotals") or {}).get("variableCount", 0) or 0)
+    variable_count = float((summary.get("stackSummaryTotals") or {}).get("variableCount", 0))
     eq_count = len(summary.get("equivalenceTies", pd.DataFrame()))
     status = {
         "nodeType": node_type,
@@ -594,7 +594,7 @@ def upload_rows(df: Any, database: str, form_data: dict[str, Any] | None = None,
         time.sleep(poll_interval_seconds)
     try:
         call_api("updateWaitingUSES", {"database": prepared["database"]}, request="POST", url=url)
-    except Exception:
+    except CatMapPyError:
         pass
     table = None
     if isinstance(status, dict):
