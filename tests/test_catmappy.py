@@ -17,6 +17,11 @@ def test_build_key_vectorization():
     assert build_key("Type", ["A", "B"]) == ["Type == A", "Type == B"]
 
 
+def test_build_key_mismatched_lengths_raise():
+    with pytest.raises(CatMapPyError):
+        build_key(["a", "b"], ["1", "2", "3"])
+
+
 def test_build_key_from_columns_and_drop():
     frame = pd.DataFrame([{"Type": "Adamana Brown", "Region": "Flagstaff"}])
     out = build_key_from_columns(frame, ["Type", "Region"], drop_source=True)

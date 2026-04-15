@@ -444,10 +444,13 @@ def build_key_from_columns(data: pd.DataFrame, columns: list[str], key_column: s
                 parts.append(f"{col} == {text}")
         key = " && ".join(parts)
         if not key:
-            bad_rows.append(i + 1)
+            bad_rows.append(i)
         keys.append(key)
     if bad_rows:
-        raise CatMapPyError(f"Cannot build Key values for row(s) with empty source values across selected columns: {', '.join(map(str, bad_rows))}.")
+        raise CatMapPyError(
+            "Cannot build Key values for row index label(s) with empty source values across selected columns: "
+            f"{', '.join(map(str, bad_rows))}."
+        )
     out[key_column] = keys
     return out.drop(columns=columns) if drop_source else out
 
@@ -472,8 +475,14 @@ def normalize_key(key: str | list[str]) -> list[str]:
 def is_normalized_key(key: str | list[str]) -> list[bool]:
     values = [key] if isinstance(key, str) else list(key)
     normalized = normalize_key(values)
-    pattern = re.compile(r"^.+?\s==\s.+?(?:\s&&\s.+?\s==\s.+?)*$")
-    return [n == str(v) and bool(pattern.match(n)) for v, n in zip(values, normalized)]
+    checks: list[bool] = []
+    for value, norm in zip(values, normalized):
+        if norm != str(value):
+            checks.append(False)
+            continue
+        segments = [segment.strip() for segment in norm.split("&&") if segment.strip()]
+        checks.append(bool(segments) and all(" == " in segment for segment in segments))
+    return checks
 
 
 def prepare_upload_rows(df: Any, form_data: dict[str, Any] | None = None, action: str = "add_node", properties: list[str] | None = None, merging_type: str = "0", database: str = "SocioMap") -> dict[str, Any]:
