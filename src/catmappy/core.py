@@ -131,8 +131,7 @@ def get_cmid_info(database: str, cmid: str) -> Any:
     return call_api(f"CMID/{_validate_database(database)}/{_validate_string(cmid, 'cmid')}", {})
 
 
-def CMIDinfo(database: str, cmid: str) -> Any:
-    return get_cmid_info(database, cmid)
+CMIDinfo = get_cmid_info
 
 
 def get_dataset_metadata(database: str, cmid: str, domain: str = "CATEGORY", children: bool | None = None) -> Any:
@@ -170,8 +169,8 @@ def search_database(
     query: str = "false",
     limit: int = 1000,
 ) -> Any:
-    if limit < 1:
-        raise CatMapPyError("`limit` must be a positive number.")
+    if not isinstance(limit, int) or limit < 1:
+        raise CatMapPyError("`limit` must be a positive integer.")
     return call_api(
         "search",
         {
@@ -365,7 +364,10 @@ def downloadLinkFileWorkbook(cmid: str, database: str = "SocioMap", path: str | 
     if not result["status"]["isMergingTemplate"]:
         raise CatMapPyError(f"\"{cmid}\" is not a merging template.")
     if result["status"]["hasVariableMappings"]:
-        raise CatMapPyError(f"Merging template \"{cmid}\" has variable mappings. Download the merge template workbook instead.")
+        raise CatMapPyError(
+            f"Merging template \"{cmid}\" has variable mappings. "
+            "Use downloadMergingTemplateWorkbook() instead."
+        )
     if not result["status"]["canDownloadLinkFile"]:
         raise CatMapPyError(f"Merging template \"{cmid}\" has no equivalence ties to build a link file.")
     out = Path(path or f"link_file_{cmid}.xlsx").resolve()

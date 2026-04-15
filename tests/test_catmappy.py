@@ -37,8 +37,7 @@ def test_normalize_and_check_key():
 
 
 def test_aliases_match():
-    assert CMIDinfo is not None
-    assert get_cmid_info is not None
+    assert CMIDinfo is get_cmid_info
 
 
 def test_call_api_http_error(monkeypatch):
