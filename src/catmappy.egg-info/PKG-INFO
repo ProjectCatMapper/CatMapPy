@@ -1,3 +1,19 @@
+Metadata-Version: 2.4
+Name: catmappy
+Version: 0.1.0
+Summary: Python interface to the CatMapper API
+Author: ProjectCatMapper
+License: GPL-3.0-only
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: openpyxl>=3.1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Dynamic: license-file
+
 # CatMapPy
 
 Python port of the CatMapper API wrapper package from CatMapR.

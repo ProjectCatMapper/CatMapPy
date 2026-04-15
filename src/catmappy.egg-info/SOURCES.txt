@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/catmappy/__init__.py
+src/catmappy/core.py
+src/catmappy.egg-info/PKG-INFO
+src/catmappy.egg-info/SOURCES.txt
+src/catmappy.egg-info/dependency_links.txt
+src/catmappy.egg-info/requires.txt
+src/catmappy.egg-info/top_level.txt
+tests/test_catmappy.py
