@@ -29,3 +29,5 @@ Set API overrides with environment variables when needed:
 
 - `CATMAPR_API_URL`
 - `CATMAPR_API_KEY`
+
+`CATMAPR_*` names are intentionally retained for compatibility with existing CatMapper API deployments.

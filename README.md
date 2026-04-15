@@ -69,3 +69,5 @@ This project is licensed under the terms in [LICENSE](LICENSE).
 
 - `CATMAPR_API_URL`: Override API base URL.
 - `CATMAPR_API_KEY`: API key for authenticated write endpoints.
+
+`CATMAPR_*` naming is retained for compatibility with existing CatMapper API deployments.
