@@ -593,7 +593,13 @@ def upload_rows(df: Any, database: str, form_data: dict[str, Any] | None = None,
             raise CatMapPyError(f"Timed out waiting for upload task `{task_id}` after {timeout_seconds:.0f} seconds.")
         time.sleep(poll_interval_seconds)
     try:
-        call_api("updateWaitingUSES", {"database": prepared["database"]}, request="POST", url=url)
+        call_api(
+            "updateWaitingUSES",
+            {"database": prepared["database"]},
+            request="POST",
+            url=url,
+            headers={"X-API-Key": _api_key(api_key)},
+        )
     except CatMapPyError:
         pass
     table = None
