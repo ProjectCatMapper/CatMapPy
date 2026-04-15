@@ -69,11 +69,11 @@ See the docs API page for exported functions:
 
 ## Environment variables
 
-- `CATMAPR_API_URL`: override API base URL.
+- `CATMAPR_API_URL`: Override API base URL.
 - `CATMAPR_API_KEY`: API key for authenticated write endpoints.
 - `CATMAPPER_API_KEY`: fallback API key variable.
 
-The `CATMAPR_*` names are retained for compatibility with existing CatMapper tooling across packages.
+The `CATMAPR_*` names are retained for compatibility with existing CatMapper API deployments.
 
 ## Contributing
 
