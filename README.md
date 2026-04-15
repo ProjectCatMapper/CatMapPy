@@ -54,8 +54,11 @@ translated = translate_rows(
 ### Environment variables
 
 - `CATMAPR_API_URL`: override API base URL.
+- `CATMAPPER_API_URL`: fallback API base URL variable.
 - `CATMAPR_API_KEY`: API key for authenticated write endpoints.
 - `CATMAPPER_API_KEY`: fallback API key variable.
+
+The `CATMAPR_*` names are retained for compatibility with existing CatMapper tooling across packages.
 
 See full usage and API coverage in the docs site.
 

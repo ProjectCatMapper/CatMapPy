@@ -7,6 +7,10 @@ import os
 os.environ["CATMAPR_API_URL"] = "https://api.catmapper.org"
 ```
 
+By default, CatMapPy uses `https://api.catmapper.org`. Set this only when you need to target a different deployment (for example, a staging or local API).
+
+CatMapPy uses `CATMAPR_API_URL` and `CATMAPR_API_KEY` for cross-package compatibility with existing CatMapper tooling, and also supports `CATMAPPER_API_URL`/`CATMAPPER_API_KEY`.
+
 ## Configure API key for write endpoints
 
 ```python
@@ -41,8 +45,8 @@ translated = translate_rows(
 from catmappy import propose_merge_links
 
 links = propose_merge_links(
-    category_label="ETHNICITY",
-    dataset_choices=["SD5", "SD6"],
+    categoryLabel="ETHNICITY",
+    datasetChoices=["SD5", "SD6"],
     database="SocioMap",
     equivalence="standard",
 )
