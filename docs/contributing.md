@@ -5,11 +5,22 @@ Contributions are welcome.
 - Open an issue: <https://github.com/ProjectCatMapper/CatMapPy/issues>
 - Open a pull request: <https://github.com/ProjectCatMapper/CatMapPy/pulls>
 
-## Local development
+## Development setup
 
 ```bash
-pip install -e .[dev]
-pytest
+python -m pip install -e .[dev,docs]
+```
+
+## Run tests
+
+```bash
+pytest -q
+```
+
+## Build docs locally
+
+```bash
+mkdocs serve
 ```
 
 ## Related ProjectCatMapper resources

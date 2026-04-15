@@ -1,4 +1,4 @@
-name: Deploy Pages
+name: docs
 
 on:
   push:
@@ -12,27 +12,32 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install docs dependencies
-        run: python -m pip install --upgrade pip mkdocs
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .[docs]
 
-      - name: Build site
-        run: mkdocs build --site-dir site
+      - name: Build docs
+        run: mkdocs build --strict
 
-      - name: Upload Pages artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site

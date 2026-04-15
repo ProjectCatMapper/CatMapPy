@@ -7,9 +7,7 @@ import os
 os.environ["CATMAPR_API_URL"] = "https://api.catmapper.org"
 ```
 
-By default, CatMapPy uses `https://api.catmapper.org`. Set this only when you need to target a different deployment (for example, a staging or local API).
-
-CatMapPy uses `CATMAPR_API_URL` and `CATMAPR_API_KEY` for cross-package compatibility with existing CatMapper tooling, and also supports `CATMAPPER_API_URL`/`CATMAPPER_API_KEY`.
+By default, CatMapPy uses `https://api.catmapper.org`.
 
 ## Configure API key for write endpoints
 
@@ -20,34 +18,20 @@ os.environ["CATMAPR_API_KEY"] = "cmk_your_api_key"
 
 CatMapPy reads `CATMAPR_API_KEY` first, and falls back to `CATMAPPER_API_KEY`.
 
-## Quickstart
+## Common workflows
 
-```python
-import pandas as pd
-from catmappy import list_datasets, search_database, translate_rows
+### 1. Search and inspect metadata
 
-catalog = list_datasets("SocioMap")
-results = search_database(database="SocioMap", domain="ETHNICITY", term="Afghanistan", property="Name")
+Use `list_datasets`, `search_database`, and metadata helpers to understand available keys and domains.
 
-rows = pd.DataFrame([{"country": "Afghanistan"}])
-translated = translate_rows(
-    rows=rows,
-    database="SocioMap",
-    domain="ADM0",
-    term="country",
-    property="Name",
-)
-```
+### 2. Build stable merge keys
 
-## Merge example
+Use `normalize_key`, `build_key`, and `build_key_from_columns` to create reproducible matching keys.
 
-```python
-from catmappy import propose_merge_links
+### 3. Translate tabular rows
 
-links = propose_merge_links(
-    categoryLabel="ETHNICITY",
-    datasetChoices=["SD5", "SD6"],
-    database="SocioMap",
-    equivalence="standard",
-)
-```
+Use `translate_rows` for direct row-wise translations, or `generateMergeFiles` for larger merge workflows.
+
+## Error handling
+
+CatMapPy raises `CatMapPyError` for validation failures and API errors, including clear authorization messages for missing or invalid API keys.

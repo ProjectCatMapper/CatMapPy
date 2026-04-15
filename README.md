@@ -1,10 +1,17 @@
 # CatMapPy
 
-Python package interface for the CatMapper API.
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/github/license/ProjectCatMapper/CatMapPy)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-2ea44f)](https://projectcatmapper.github.io/CatMapPy/)
+[![ProjectCatMapper](https://img.shields.io/badge/ProjectCatMapper-Organization%20Site-24292f)](https://projectcatmapper.github.io/)
+
+CatMapPy is a Python interface to the CatMapper API for searching datasets, building merge keys, and translating tabular data.
 
 ## Package Documentation
 
-Project page (package docs): <https://projectcatmapper.github.io/CatMapPy/>
+Project docs: <https://projectcatmapper.github.io/CatMapPy/>
+
+ProjectCatMapper organization site: <https://projectcatmapper.github.io/>
 
 ## Overview
 
@@ -18,16 +25,16 @@ It supports:
 - Merge-link proposal and dataset joins
 - Upload/edit write workflows with API-key authentication
 
-## Install
+## Installation
 
 ```bash
-pip install git+https://github.com/ProjectCatMapper/CatMapPy.git
+python -m pip install -e .
 ```
 
 For development:
 
 ```bash
-pip install -e .[dev]
+python -m pip install -e .[dev,docs]
 ```
 
 ## Quickstart
@@ -49,23 +56,39 @@ translated = translate_rows(
 )
 ```
 
-## Usage
+## Usage highlights
 
-### Environment variables
+- Search and metadata discovery: `list_datasets`, `search_database`, `get_dataset_metadata`, `get_domains`
+- Merge key helpers: `normalize_key`, `build_key`, `build_key_from_columns`
+- Translation/upload workflows: `translate_rows`, `prepare_upload_rows`, `upload_rows`
 
-- `CATMAPR_API_URL`: override API base URL.
-- `CATMAPPER_API_URL`: fallback API base URL variable.
+## API reference
+
+See the docs API page for exported functions:
+<https://projectcatmapper.github.io/CatMapPy/api-reference/>
+
+## Environment variables
+
+- `CATMAPR_API_URL`: Override API base URL.
 - `CATMAPR_API_KEY`: API key for authenticated write endpoints.
 - `CATMAPPER_API_KEY`: fallback API key variable.
 
-The `CATMAPR_*` names are retained for compatibility with existing CatMapper tooling across packages.
-
-See full usage and API coverage in the docs site.
+The `CATMAPR_*` names are retained for compatibility with existing CatMapper API deployments.
 
 ## Contributing
 
 - Issues: <https://github.com/ProjectCatMapper/CatMapPy/issues>
 - Pull requests: <https://github.com/ProjectCatMapper/CatMapPy/pulls>
+
+```bash
+pytest -q
+mkdocs serve
+```
+
+## Citation
+
+If CatMapPy supports your work, cite ProjectCatMapper resources and link to:
+<https://github.com/ProjectCatMapper/CatMapPy>
 
 ## License
 
