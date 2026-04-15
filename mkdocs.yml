@@ -1,0 +1,15 @@
+site_name: CatMapPy
+site_description: Python wrapper for the CatMapper API
+site_url: https://projectcatmapper.github.io/CatMapPy/
+repo_url: https://github.com/ProjectCatMapper/CatMapPy
+repo_name: ProjectCatMapper/CatMapPy
+edit_uri: edit/main/docs/
+
+theme:
+  name: mkdocs
+
+nav:
+  - Home: index.md
+  - API Reference: reference.md
+  - Usage: usage.md
+  - Contributing: contributing.md
