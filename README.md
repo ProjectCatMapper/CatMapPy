@@ -7,15 +7,34 @@
 
 CatMapPy is a Python interface to the CatMapper API for searching datasets, building merge keys, and translating tabular data.
 
-## Documentation
+## Package Documentation
 
-- Project docs: <https://projectcatmapper.github.io/CatMapPy/>
-- ProjectCatMapper organization site: <https://projectcatmapper.github.io/>
+Project docs: <https://projectcatmapper.github.io/CatMapPy/>
+
+ProjectCatMapper organization site: <https://projectcatmapper.github.io/>
+
+## Overview
+
+**CatMapPy** provides Python access to [CatMapper](https://catmapper.org) APIs used by `SocioMap` and `ArchaMap`.
+
+It supports:
+
+- Dataset metadata retrieval
+- Entity/category search
+- Row translation workflows
+- Merge-link proposal and dataset joins
+- Upload/edit write workflows with API-key authentication
 
 ## Installation
 
 ```bash
 python -m pip install -e .
+```
+
+For development:
+
+```bash
+python -m pip install -e .[dev,docs]
 ```
 
 ## Quickstart
@@ -48,10 +67,20 @@ translated = translate_rows(
 See the docs API page for exported functions:
 <https://projectcatmapper.github.io/CatMapPy/api-reference/>
 
+## Environment variables
+
+- `CATMAPR_API_URL`: override API base URL.
+- `CATMAPR_API_KEY`: API key for authenticated write endpoints.
+- `CATMAPPER_API_KEY`: fallback API key variable.
+
+The `CATMAPR_*` names are retained for compatibility with existing CatMapper tooling across packages.
+
 ## Contributing
 
+- Issues: <https://github.com/ProjectCatMapper/CatMapPy/issues>
+- Pull requests: <https://github.com/ProjectCatMapper/CatMapPy/pulls>
+
 ```bash
-python -m pip install -e .[dev,docs]
 pytest -q
 mkdocs serve
 ```
@@ -63,11 +92,4 @@ If CatMapPy supports your work, cite ProjectCatMapper resources and link to:
 
 ## License
 
-This project is licensed under the terms in [LICENSE](LICENSE).
-
-## Environment variables
-
-- `CATMAPR_API_URL`: Override API base URL.
-- `CATMAPR_API_KEY`: API key for authenticated write endpoints.
-
-`CATMAPR_*` naming is retained for compatibility with existing CatMapper API deployments.
+GNU General Public License v3.0. See [LICENSE](LICENSE).

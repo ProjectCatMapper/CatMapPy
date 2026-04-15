@@ -2,6 +2,9 @@
 
 Contributions are welcome.
 
+- Open an issue: <https://github.com/ProjectCatMapper/CatMapPy/issues>
+- Open a pull request: <https://github.com/ProjectCatMapper/CatMapPy/pulls>
+
 ## Development setup
 
 ```bash
@@ -19,3 +22,8 @@ pytest -q
 ```bash
 mkdocs serve
 ```
+
+## Related ProjectCatMapper resources
+
+- ProjectCatMapper docs hub: <https://projectcatmapper.github.io/>
+- CatMapR docs: <https://projectcatmapper.github.io/CatMapR/>

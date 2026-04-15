@@ -2,7 +2,7 @@
 
 CatMapPy is a Python interface to the CatMapper API for searching catalog data, preparing merge keys, and submitting translation workflows.
 
-[Get started](quickstart.md)  
+[Get started](quickstart.md)
 [ProjectCatMapper organization site](https://projectcatmapper.github.io/)
 
 ## Why CatMapPy?

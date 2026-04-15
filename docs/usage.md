@@ -1,5 +1,23 @@
 # Usage
 
+## Configure API URL (optional)
+
+```python
+import os
+os.environ["CATMAPR_API_URL"] = "https://api.catmapper.org"
+```
+
+By default, CatMapPy uses `https://api.catmapper.org`.
+
+## Configure API key for write endpoints
+
+```python
+import os
+os.environ["CATMAPR_API_KEY"] = "cmk_your_api_key"
+```
+
+CatMapPy reads `CATMAPR_API_KEY` first, and falls back to `CATMAPPER_API_KEY`.
+
 ## Common workflows
 
 ### 1. Search and inspect metadata
