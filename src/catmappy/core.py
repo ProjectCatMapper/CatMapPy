@@ -127,6 +127,10 @@ def allDatasets(database: str) -> Any:
     return list_datasets(database)
 
 
+def listDatasetMetadata(database: str) -> Any:
+    return list_datasets(database)
+
+
 def get_cmid_info(database: str, cmid: str) -> Any:
     return call_api(f"CMID/{_validate_database(database)}/{_validate_string(cmid, 'cmid')}", {})
 

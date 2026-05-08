@@ -58,9 +58,10 @@ translated = translate_rows(
 
 ## Usage highlights
 
-- Search and metadata discovery: `list_datasets`, `search_database`, `get_dataset_metadata`, `get_domains`
+- Search and metadata discovery: `list_datasets`, `listDatasetMetadata`, `search_database`, `get_dataset_metadata`, `get_cmid_info`, `get_domains`
 - Merge key helpers: `normalize_key`, `build_key`, `build_key_from_columns`
-- Translation/upload workflows: `translate_rows`, `prepare_upload_rows`, `upload_rows`
+- Merge-template workflows: `get_merge_template`, `get_merge_template_summary`, `getMergingTemplate`, `findMergingTemplate`, `generateMergeFiles`
+- Translation/upload workflows: `translate_rows`, `prepare_upload_rows`, `upload_rows`, `uploadInputNodes`, `submitEditUpload`
 
 ### Standard Upload/Edit Options
 

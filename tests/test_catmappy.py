@@ -3,11 +3,14 @@ import pytest
 
 from catmappy import (
     CMIDinfo,
+    allDatasets,
     build_key,
     build_key_from_columns,
     call_api,
     get_cmid_info,
     is_normalized_key,
+    listDatasetMetadata,
+    list_datasets,
     normalize_key,
 )
 from catmappy.core import CatMapPyError
@@ -36,8 +39,11 @@ def test_normalize_and_check_key():
     assert is_normalized_key([normalized, raw]) == [True, False]
 
 
-def test_aliases_match():
+def test_aliases_match(monkeypatch):
+    monkeypatch.setattr("catmappy.core.call_api", lambda *args, **kwargs: {"ok": True})
     assert CMIDinfo is get_cmid_info
+    assert allDatasets("SocioMap") == list_datasets("SocioMap")
+    assert listDatasetMetadata("SocioMap") == list_datasets("SocioMap")
 
 
 def test_call_api_http_error(monkeypatch):
