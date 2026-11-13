@@ -21,7 +21,8 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Python 3.9 installers are available for 22.04, not Ubuntu 26.04/latest.
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
