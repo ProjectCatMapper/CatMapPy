@@ -1,3 +1,9 @@
+# CatMapPy 0.1.3
+
+- Use a runner image that supports the Python 3.9 package check
+
+Automatic version update for source commit `7cd15d25f208c4945b220878cd71416b5d5d1297`.
+
 # CatMapPy 0.1.2
 
 - Make concurrent version tests independent of runner timing
