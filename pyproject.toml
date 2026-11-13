@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "catmappy"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python interface to the CatMapper API"
 readme = "README.md"
 requires-python = ">=3.9"

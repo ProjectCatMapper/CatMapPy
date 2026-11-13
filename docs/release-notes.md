@@ -1,3 +1,10 @@
+# CatMapPy 0.1.2
+
+- Make concurrent version tests independent of runner timing
+- Automate package version commits and matching tags
+
+Automatic version update for source commit `b9697d2cac18cf78f3fa9cfcd91cfdf67685e010`.
+
 # CatMapPy 0.1.1 (2026-11-13)
 
 - Added `preflight_polygon_upload`, `apply_polygon_upload`, and
