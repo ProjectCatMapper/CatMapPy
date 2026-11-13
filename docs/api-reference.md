@@ -39,10 +39,33 @@ existing CatMapR workflows.
 | Wait for upload task | `waitForUploadTask(task_id, ...)` | - |
 | Submit edit upload | `submitEditUpload(...)` | - |
 | Upload and poll rows | `upload_rows(...)` | - |
+| Polygon preflight | `preflight_polygon_upload(file, database, replace_existing=False, api_key=None, url=None)` | - |
+| Apply polygon preflight | `apply_polygon_upload(token, api_key=None, url=None)` | - |
+| Discard unused preflight | `discard_polygon_upload(token, api_key=None, url=None)` | - |
+| Cancel upload task | `cancel_upload_task(task_id, cursor=0, api_key=None, url=None)` | - |
+| Direct geometry rows | `get_geometry(database, cmid, url=None)` | - |
+| Explore map geometry | `explore_geometry(database, cmid, layers=None, relations=None, max_depth=None, node_limit=None, point_limit=None, polygon_limit=None, feature_limit=None, url=None)` | - |
+| Contextual policy | `get_contextual_policy(database="SocioMap", url=None)` | - |
+| Read-only policy validation | `validate_contextual_rows(rows, database, url=None)` | - |
 
 ## Python-Specific Helpers
 
-- `call_api(...)`: public Python helper for direct CatMapper API calls.
-- `CatMapPyError`: validation and API error type raised by CatMapPy.
+- `call_api(...)`: public Python helper for direct CatMapper API calls. Supports
+  GET, JSON POST, multipart POST via `files`, and DELETE. File handles passed
+  directly to `call_api` are owned by the caller; polygon preflight manages its
+  file handle automatically.
+- `CatMapPyError`: validation and API error type raised by CatMapPy. Server
+  failures retain `error_details`, `response`, `status_code`, and `task_id`.
+  Fields without a relevant server value are empty or `None`.
+
+Spatial helpers use the server's `/api/...` routes and require a deployment
+that exposes them. `url` is the API host root, such as `https://api.catmapper.org`.
+Geometry results retain the server structure without requiring GeoPandas.
+`get_geometry` returns point/polygon rows (polygon geometry can be JSON text);
+`explore_geometry` returns processed map features, sources, and any truncation.
+Layers/relations accept comma-separated strings or lists; omitted limits use
+server defaults, and requested limits remain subject to server behavior/caps.
+
+See [polygon and geometry workflows](spatial.md) for payloads and examples.
 
 For exact signatures, see source code in [`src/catmappy/core.py`](https://github.com/ProjectCatMapper/CatMapPy/blob/main/src/catmappy/core.py).

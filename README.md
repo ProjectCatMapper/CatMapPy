@@ -112,3 +112,13 @@ If CatMapPy supports your work, cite ProjectCatMapper resources and link to:
 ## License
 
 GNU General Public License v3.0. See [LICENSE](LICENSE).
+
+### Polygon uploads, geometry, and contextual policy
+
+Version 0.1.1 adds explicit polygon preflight/apply/discard functions,
+`cancel_upload_task()`, `get_geometry()`, `explore_geometry()`,
+`get_contextual_policy()`, and `validate_contextual_rows()`. Polygon uploads
+require administrator credentials and existing USES ties; replacement is opt-in.
+See [the complete workflow](docs/spatial.md) and [release notes](NEWS.md).
+HTTP and failed-task `CatMapPyError` exceptions retain structured
+`error_details`, `response`, `status_code`, and `task_id` diagnostics.

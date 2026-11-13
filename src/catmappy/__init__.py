@@ -83,3 +83,25 @@ __all__ = [
     "uploadInputNodesStatus",
     "waitForUploadTask",
 ]
+
+from .spatial import (
+    preflight_polygon_upload,
+    apply_polygon_upload,
+    discard_polygon_upload,
+    cancel_upload_task,
+    get_geometry,
+    explore_geometry,
+    get_contextual_policy,
+    validate_contextual_rows,
+)
+
+__all__ += [
+    "preflight_polygon_upload",
+    "apply_polygon_upload",
+    "discard_polygon_upload",
+    "cancel_upload_task",
+    "get_geometry",
+    "explore_geometry",
+    "get_contextual_policy",
+    "validate_contextual_rows",
+]

@@ -13,7 +13,14 @@ VALID_DATABASES = {"SocioMap", "ArchaMap"}
 
 
 class CatMapPyError(ValueError):
-    pass
+    """API/validation error retaining structured server and task diagnostics."""
+
+    def __init__(self, message: str, *, response: Any = None, status_code: int | None = None):
+        super().__init__(message)
+        self.response = response
+        self.status_code = status_code
+        self.error_details = response.get("error_details", []) if isinstance(response, dict) else []
+        self.task_id = response.get("taskId") if isinstance(response, dict) else None
 
 
 def _validate_string(value: Any, arg: str) -> str:
@@ -48,33 +55,46 @@ def call_api(
     url: str | None = None,
     type: str = "default",
     headers: dict[str, str] | None = None,
+    files: dict[str, Any] | None = None,
 ) -> Any:
     endpoint = _validate_string(endpoint, "endpoint")
     base_url = _resolve_api_url(url)
     final_url = f"{base_url.rstrip('/')}/{endpoint}"
     request = _validate_string(request, "request").upper()
     type = _validate_string(type, "type")
-    if request not in {"GET", "POST"}:
-        raise CatMapPyError("`request` must be GET or POST.")
+    if request not in {"GET", "POST", "DELETE"}:
+        raise CatMapPyError("`request` must be GET, POST or DELETE.")
+    if files is not None and request != "POST":
+        raise CatMapPyError("File uploads require POST.")
     if type not in {"default", "stream"}:
         raise CatMapPyError("`type` must be default or stream.")
 
     try:
         if request == "GET":
             response = requests.get(final_url, params=parameters or {}, headers=headers or {}, timeout=120)
+        elif request == "DELETE":
+            response = requests.delete(final_url, json=parameters or {}, headers=headers or {}, timeout=120)
+        elif files is not None:
+            response = requests.post(final_url, data=parameters or {}, files=files, headers=headers or {}, timeout=120)
         else:
             response = requests.post(final_url, json=parameters or {}, headers=headers or {}, timeout=120)
     except requests.RequestException as exc:
         raise CatMapPyError(f"API request failed: {exc}") from exc
 
     if not response.ok:
+        try:
+            payload = response.json()
+        except ValueError:
+            payload = None
         text = response.text.strip() or f"HTTP {response.status_code}"
+        if isinstance(payload, dict):
+            text = str(payload.get("error") or payload.get("message") or text)
         if response.status_code in (401, 403):
             text = (
                 "Not authorized: missing or invalid API key/token. "
                 f"Server response: {text} See https://help.catmapper.org/API.html"
             )
-        raise CatMapPyError(text)
+        raise CatMapPyError(text, response=payload, status_code=response.status_code)
 
     if type == "stream":
         return response.text
@@ -545,9 +565,9 @@ def waitForUploadTask(task_id: str, poll_seconds: float = 2, timeout_seconds: fl
             if state == "completed":
                 return status
             if state == "failed":
-                raise CatMapPyError(str(status.get("error", "Upload task failed.")))
+                raise CatMapPyError(str(status.get("error") or status.get("message") or "Upload task failed."), response={**status, "taskId": task_id})
             if state == "canceled":
-                raise CatMapPyError(str(status.get("message", "Upload task was canceled.")))
+                raise CatMapPyError(str(status.get("message") or "Upload task was canceled."), response={**status, "taskId": task_id})
         if time.time() - start > timeout_seconds:
             raise CatMapPyError(f"Timed out waiting for upload task {task_id} after {timeout_seconds:.1f} seconds.")
         time.sleep(poll_seconds)
@@ -592,7 +612,7 @@ def upload_rows(df: Any, database: str, form_data: dict[str, Any] | None = None,
             if state == "completed":
                 break
             if state in {"failed", "canceled"}:
-                raise CatMapPyError(f"Upload task `{task_id}` ended with status `{state}`: {status.get('error') or status.get('message')}")
+                raise CatMapPyError(f"Upload task `{task_id}` ended with status `{state}`: {status.get('error') or status.get('message')}", response={**status, "taskId": task_id})
         if time.time() - start_time >= timeout_seconds:
             raise CatMapPyError(f"Timed out waiting for upload task `{task_id}` after {timeout_seconds:.0f} seconds.")
         time.sleep(poll_interval_seconds)

@@ -52,6 +52,9 @@ def test_call_api_http_error(monkeypatch):
         ok = False
         text = "boom"
 
+        def json(self):
+            raise ValueError("not JSON")
+
     def mock_get(*args, **kwargs):
         return MockResponse()
 
